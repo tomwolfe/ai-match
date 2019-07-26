@@ -21,10 +21,11 @@ ActiveRecord::Schema.define(version: 20190725094518) do
     t.integer  "weight"
     t.string   "orientation"
     t.string   "looking_for"
+    t.datetime "last_seen_at"
     t.decimal  "latitude"
     t.decimal  "longitude"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end

@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.integer :weight
       t.string :orientation
       t.string :looking_for
+      t.datetime :last_seen_at
       t.decimal :latitude
       t.decimal :longitude
 
