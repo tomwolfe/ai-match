@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190725094518) do
+ActiveRecord::Schema.define(version: 20190729155820) do
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
@@ -20,12 +20,16 @@ ActiveRecord::Schema.define(version: 20190725094518) do
     t.integer  "height"
     t.integer  "weight"
     t.string   "orientation"
-    t.string   "looking_for"
     t.datetime "last_seen_at"
     t.decimal  "latitude"
     t.decimal  "longitude"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "picture"
+    t.string   "sex"
+    t.string   "location"
+    t.string   "twitter"
+    t.string   "email"
   end
 
 end

@@ -1,6 +1,42 @@
 %p#notice= notice
 
+%h2 Details about #{@user.name}
+
+%ul#details
+  %li
+    Sex:
+    = @user.sex
+  %li
+    Age:
+    = @user.age
+  %li
+    Height in inches:
+    = @user.height
+  %li
+    Weight in pounds:
+    = @user.weight
+  %li
+    Orientation:
+    = @user.orientation
+  %li
+    Looking for:
+    = @user.looking_for
+  %li
+    Location:
+    = @user.location
+  %li
+    Email:
+    = @user.email
+  %li
+    Twitter:
+    = link_to @user.twitter
+  %li
+    Picture
+    =image_tag(@user.picture)
+
 
 = link_to 'Edit', edit_user_path(@user)
 \|
 = link_to 'Back', users_path
+\|
+= button_to 'Delete', @user, :method => :delete, :confirm => 'Are you sure you want to delete your account?'
