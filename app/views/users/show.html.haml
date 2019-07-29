@@ -19,9 +19,6 @@
     Orientation:
     = @user.orientation
   %li
-    Looking for:
-    = @user.looking_for
-  %li
     Location:
     = @user.location
   %li
@@ -30,6 +27,9 @@
   %li
     Twitter:
     = link_to @user.twitter
+  %li
+    About me:
+    = @user.about
   %li
     Picture
     =image_tag(@user.picture)
