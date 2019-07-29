@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
   def self.create_with_omniauth(auth)
+    puts auth
     create! do |user|
       user.provider = auth["provider"]
       user.uid = auth["uid"]
