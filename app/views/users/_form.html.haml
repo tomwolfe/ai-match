@@ -28,10 +28,10 @@
   = text_field :about, 'about'
   
   = label :user, :orientation, 'Orientation'
-  = select :orientation, ['Straight','Gay','Bi']
+  = select :user, :orientation, ['Straight','Gay','Bi']
   
   = label :user, :sex, 'Sex'
-  = select :sex, ['Male','Female','Couple']
+  = select :user, :sex, ['Male','Female','Couple']
 
   .actions
     = f.submit 'Save'
