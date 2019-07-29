@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   def self.create_with_omniauth(auth)
     puts auth
     create! do |user|

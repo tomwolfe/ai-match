@@ -6,31 +6,31 @@
         - @user.errors.full_messages.each do |message|
           %li= message
 
-  = label :user, :name, 'Name'
-  = text_field :name, 'name'
+  = label :user, :name
+  = text_field :user, :name
+  
+  = label :user, :age
+  = text_field :user, :age
+  
+  = label :user, :location
+  = text_field :user, :location
+  
+  = label :user, :email
+  = text_field :user, :email
 
-  = label :user, :age, 'Age'
-  = text_field :age, 'age'
+  = label :user, :height_in_inches
+  = text_field :user, :height
   
-  = label :user, :location, 'Location'
-  = text_field :location, 'location'
+  = label :user, :weight_in_pounds
+  = text_field :user, :weight
   
-  = label :user, :email, 'Email'
-  = text_field :email, 'email'
-
-  = label :user, :height, 'Height in inches'
-  = text_field :height, 'height'
+  = label :user, :about_me
+  = text_field :user, :about
   
-  = label :user, :weight, 'Weight in pounds'
-  = text_field :weight, 'weight'
-  
-  = label :user, :about, 'About me'
-  = text_field :about, 'about'
-  
-  = label :user, :orientation, 'Orientation'
+  = label :user, :orientation
   = select :user, :orientation, ['Straight','Gay','Bi']
   
-  = label :user, :sex, 'Sex'
+  = label :user, :sex
   = select :user, :sex, ['Male','Female','Couple']
 
   .actions
