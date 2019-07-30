@@ -52,4 +52,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  
+  # Load the app's custom environment variables here
+  app_environment_variables = File.join(Rails.root, 'config', 'app_environment_variables.rb')
+  load(app_environment_variables) if File.exists?(app_environment_variables)
 end

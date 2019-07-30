@@ -10,6 +10,10 @@ Things you may want to cover:
 * System dependencies
 
 * Configuration
+OmniAuth login for development can be achieved by creating a file /config/app_environment_variables.rb with keys/tokens as such:
+ENV['TWITTER_KEY']='key'
+ENV['TWITTER_SECRET']='secret'
+for production you can just set the ENV variables on Heroku or whatever.
 
 * Database creation
 
