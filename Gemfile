@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml-rails'
 gem 'sassc-rails'
 gem 'omniauth-twitter'
+gem 'geocoder'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -24,7 +24,7 @@
     = @user.email
   %li
     Twitter:
-    = link_to @user.twitter
+    = link_to @user.twitter, @user.twitter
   %li
     About me:
     = @user.about
@@ -35,6 +35,6 @@
 
 = link_to 'Edit', edit_user_path(@user)
 \|
-= link_to 'Back', users_path
+= link_to 'Users Index', users_path
 \|
-= button_to 'Delete', @user, :method => :delete, :confirm => 'Are you sure you want to delete your account?'
+= button_to 'Delete your account', @user, :method => :delete, data: { confirm: 'Are you sure you want to delete your account?' }

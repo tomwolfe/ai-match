@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :user_owner, only: [:edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:distance].present?
+      @users = User.near(current_user, params[:distance])
+    else
+      @users = User.near(current_user, 100)
+    end
   end
 
   # GET /users/1
@@ -54,9 +59,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    session[:user_id] = nil
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,6 +71,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+    
+    def user_owner
+      unless @user.id == current_user.id
+        flash[:notice] = 'Access denied as you are not owner of this User'
+        redirect_to users_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
