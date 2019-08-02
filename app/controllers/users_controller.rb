@@ -34,9 +34,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if params[:distance].present?
-      handle_minors(User.near(current_user, params[:distance]))
+      #handle_minors(User.near(current_user, params[:distance]))
+      @users=User.near(current_user, params[:distance])
     else
-      handle_minors(User.near(current_user, 100))
+      @users=User.near(current_user, 100)
     end
   end
 
