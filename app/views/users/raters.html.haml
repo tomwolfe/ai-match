@@ -1,9 +1,4 @@
--title "Listing users you have yet to rate"
-
-= form_tag users_path, :method => :get do
-  = label_tag "within distance"
-  = text_field_tag :distance, params[:distance]
-  = submit_tag "Submit"
+-title "Listing users who Like you that you've yet to rate"
 
 %table
   %thead
@@ -18,9 +13,11 @@
       %th Weight
       %th Orientation
       %th Distance
+      %th Rate
 
   %tbody
-    - @users.each do |user|
+    - @raters.each do |rater|
+    - user=rater
       %tr
         %td= image_tag(user.picture) if user.picture
         %td= link_to user.name, user
@@ -31,6 +28,7 @@
         %td= "#{user.height} In"
         %td= "#{user.weight} Lbs"
         %td= user.orientation
-        %td= user.distance
+        %td= user.distance.round(2)
+        %td= link_to 'Rate', new_user_rate_path(user)
 
 %br

@@ -1,9 +1,20 @@
 class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
-    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
-    session[:user_id] = user.id
-    redirect_to user, :notice => "Signed in!"
+    @user = User.find_by_provider_and_uid(auth["provider"], auth["uid"])
+    if @user
+      session[:user_id] = @user.id
+      redirect_to @user, :notice => "Signed in!"
+    else
+      @user=User.build_with_omniauth(auth)
+      if @user.save
+        session[:user_id] = user.id
+        redirect_to user, :notice => "Signed in!"
+      else
+        session[:omniauth] = auth
+        redirect_to new_user_url
+      end
+    end
   end
 
   def destroy

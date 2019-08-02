@@ -1,16 +1,16 @@
 class User < ApplicationRecord
-  has_many :ratings
-  has_many :rated_users, through: :rating, class_name: "User", foreign_key: :rated_user_id # The users this user has rated
-  has_many :rated_by_users, through: :rating, class_name: "User", foreign_key: :rating_user_id # The users that have rated this user
-  has_many :matches
-  has_many :matched_users, through: :match, class_name: "User", foreign_key: :matched_user_id # The users this user has matched
-  has_many :matched_by_users, through: :match, class_name: "User", foreign_key: :matching_user_id # The users that have matched this user
+  has_many :raters, :class_name => 'Rate', :foreign_key => 'user_id'
+  has_many :ratings, :class_name => 'Rate', :foreign_key => 'rater_id'
+  
+  scope :minor, -> { where("age < ?", 18) }
+  scope :adult, -> { where("age >= ?", 18) }
+  
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   geocoded_by :location
   after_validation :geocode, if: ->(obj){ obj.location.present? and obj.location_changed? }
   
-  def self.create_with_omniauth(auth)
-    create! do |user|
+  def self.build_with_omniauth(auth)
+    build do |user|
       user.provider = auth["provider"]
       user.uid = auth["uid"]
       user.name = auth["info"]["name"]

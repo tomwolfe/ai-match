@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @rate.user.name
+%p
+  %b Rater:
+  = @rate.rater.name
+%p
+  %b Value:
+  = @rate.value
+
+= link_to 'Edit', edit_user_rate_path(@user, @rate)
+\|
+= link_to 'Back', user_ratings_path(@user)

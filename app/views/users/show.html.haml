@@ -1,6 +1,9 @@
-%h2 Details about #{@user.name}
+- title "Showing user: #{@user.name}"
 
 %ul#details
+  %li
+    Picture
+    =image_tag(@user.picture)
   %li
     Sex:
     = @user.sex
@@ -20,6 +23,9 @@
     Location:
     = @user.location
   %li
+    Distance:
+    =@user.distance_to(current_user)
+  %li
     Email:
     = @user.email
   %li
@@ -28,13 +34,11 @@
   %li
     About me:
     = @user.about
-  %li
-    Picture
-    =image_tag(@user.picture)
 
 
 = link_to 'Edit', edit_user_path(@user)
 \|
 = link_to 'Users Index', users_path
 \|
-= button_to 'Delete your account', @user, :method => :delete, data: { confirm: 'Are you sure you want to delete your account?' }
+- if @user.id == current_user.id
+  = button_to 'Delete your account', @user, :method => :delete, data: { confirm: 'Are you sure you want to delete your account?' }

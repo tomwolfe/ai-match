@@ -1,0 +1,25 @@
+- title "Rates for user: #{@user.name}"
+
+%table
+  %thead
+    %tr
+      %th User
+      %th User
+      %th Value
+      %th
+      %th
+      %th
+
+  %tbody
+    - @rates.each do |rate|
+      %tr
+        %td= rate.user
+        %td= rate.user
+        %td= rate.value
+        %td= link_to 'Show', rate
+        %td= link_to 'Edit', edit_rate_path(rate)
+        %td= link_to 'Destroy', rate, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Rating', new_rating_path

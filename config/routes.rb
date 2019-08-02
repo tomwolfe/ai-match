@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
-  
-  resources :users
+  resources :rates
+  resources :users do
+    get 'ratings'
+    get 'raters'
+    resources :rates
+  end
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
   get "auth/failure", to: redirect('/')
