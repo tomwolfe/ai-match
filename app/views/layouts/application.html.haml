@@ -13,6 +13,13 @@
         - if current_user
           = "Signed in as #{current_user.name}"
           = link_to "Sign out", signout_path
+          %ul
+            %li
+              =link_to "Who likes you", user_raters_path(current_user)
+            %li
+              =link_to "Your ratings", user_ratings_path(current_user)
+            %li
+              =link_to "Users near you", users_path
         - else
           = link_to "Sign in with Twitter", "/auth/twitter"
       %div#flash

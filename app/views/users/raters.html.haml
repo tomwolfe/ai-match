@@ -17,7 +17,7 @@
 
   %tbody
     - @raters.each do |rater|
-    - user=rater
+      - user = rater.rater
       %tr
         %td= image_tag(user.picture) if user.picture
         %td= link_to user.name, user
@@ -28,7 +28,7 @@
         %td= "#{user.height} In"
         %td= "#{user.weight} Lbs"
         %td= user.orientation
-        %td= user.distance.round(2)
+        %td= user.distance_to(current_user)
         %td= link_to 'Rate', new_user_rate_path(user)
 
 %br

@@ -18,6 +18,7 @@
       %th Weight
       %th Orientation
       %th Distance
+      %th Rate
 
   %tbody
     - @users.each do |user|
@@ -32,5 +33,6 @@
         %td= "#{user.weight} Lbs"
         %td= user.orientation
         %td= user.distance
+        %td= link_to 'Rate', new_user_rate_path(user)
 
 %br

@@ -4,13 +4,15 @@ class UsersController < ApplicationController
   
   # GET /users/:user_id/raters
   def raters
-    #@raters = @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:rater_id)).includes(:rater)
-    @raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
+    @raters = @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:rater_id)).includes(:rater)
+    #@raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
+    #@raters=User.near(current_user).joins(:raters).preload(:raters).where("raters.value" => true).where.not(user_id: current_user.ratings.select(:user_id))
   end
   
   # GET /users/:user_id/ratings
   def ratings
     @ratings = @user.ratings.includes(:user)
+    #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
   end
   
   def new
@@ -34,11 +36,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if params[:distance].present?
-      #handle_minors(User.near(current_user, params[:distance]))
       @users=User.near(current_user, params[:distance])
     else
       @users=User.near(current_user, 100)
     end
+    @users=User.handle_minors(@users, current_user)
   end
 
   # GET /users/1
@@ -91,20 +93,6 @@ class UsersController < ApplicationController
         redirect_to users_path
       end
     end
-    
-    def handle_minors(users)
-      #not already rated/not already disliked by other user
-      @users = users.where.not(id: current_user.ratings.select(:user_id)).where.not(id: current_user.raters.where(value: false).select(:user_id))
-      if not current_user.age.nil?
-        @users=@users.minor if current_user.age < 18
-        @users=@users.adult if current_user.age >= 18
-      else
-        flash[:notice] = 'Set your age first'
-        redirect_to users_path
-      end
-      @users
-    end
-        
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params

@@ -34,11 +34,15 @@
   %li
     About me:
     = @user.about
+  - unless @user.id == current_user.id
+    %li
+      Rate User:
+      = link_to 'Rate', new_user_rate_path(user)
 
 
 = link_to 'Edit', edit_user_path(@user)
 \|
-= link_to 'Users Index', users_path
+= link_to 'Users near you', users_path
 \|
 - if @user.id == current_user.id
   = button_to 'Delete your account', @user, :method => :delete, data: { confirm: 'Are you sure you want to delete your account?' }

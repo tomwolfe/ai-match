@@ -12,6 +12,7 @@
       %th Height
       %th Weight
       %th Orientation
+      %th Distance
       %th Rating
       %th Show
       %th Edit
@@ -30,6 +31,7 @@
         %td= "#{user.height} In"
         %td= "#{user.weight} Lbs"
         %td= user.orientation
+        %td= user.distance_to(current_user)
         %td= rating.value
         %td= link_to 'Show', [current_user, rating]
         %td= link_to 'Edit', edit_user_rate_path(current_user, rating)

@@ -19,4 +19,9 @@ class User < ApplicationRecord
       user.twitter = auth["info"]["urls"]["Twitter"]
     end
   end
+  
+  def self.handle_minors(users, current_user)
+    users=users.minor if current_user.age < 18
+    users=users.adult if current_user.age >= 18
+  end
 end
