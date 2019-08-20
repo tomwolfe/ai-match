@@ -5,10 +5,10 @@ class Rate < ApplicationRecord
   validate :age
   
   def age
-    if user.age < 18 && rater.age >= 18
-      errors.add(:base, "You cannot rate users under 18")
-    elsif rater.age < 18 && user.age >= 18
-      errors.add(:base, "You cannot rate users over 18")
-    end
+    #if user.age < 18 && rater.age >= 18
+    #  errors.add(:base, "You cannot rate users under 18")
+    #elsif rater.age < 18 && user.age >= 18
+    #  errors.add(:base, "You cannot rate users over 18")
+    #end
   end
 end
