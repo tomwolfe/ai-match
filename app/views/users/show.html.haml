@@ -35,7 +35,7 @@
     About me:
     = @user.about
   - unless @user.id == current_user.id
-    - rating=@user.ratings.find_by("user_id", current_user.id)
+    - rating=@user.raters.find_by(rater_id: current_user.id)
     - if rating.nil?
       %li
         Rate User:
@@ -46,9 +46,7 @@
         = link_to 'Edit', edit_user_rate_path(@user,rating)
 
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Users near you', users_path
-\|
+- if @user.id == current_user.id
+  = link_to 'Edit', edit_user_path(@user)
 - if @user.id == current_user.id
   = button_to 'Delete your account', @user, :method => :delete, data: { confirm: 'Are you sure you want to delete your account?' }
