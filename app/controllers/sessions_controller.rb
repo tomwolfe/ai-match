@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
     else
       @user=User.build_with_omniauth(auth)
       if @user.save
-        session[:user_id] = user.id
-        redirect_to user, :notice => "Signed in!"
+        session[:user_id] = @user.id
+        redirect_to @user, :notice => "Signed in!"
       else
         session[:omniauth] = auth
         redirect_to new_user_url

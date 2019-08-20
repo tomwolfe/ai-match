@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     else
       @users=User.near(current_user, 100)
     end
-    @users=User.handle_minors(@users, current_user)
+    #@users=User.handle_minors(@users, current_user)
   end
 
   # GET /users/1

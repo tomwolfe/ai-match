@@ -3,7 +3,7 @@
 %ul#details
   %li
     Picture
-    =image_tag(@user.picture)
+    =image_tag(@user.picture) if @user.picture
   %li
     Sex:
     = @user.sex
@@ -30,14 +30,20 @@
     = @user.email
   %li
     Twitter:
-    = link_to @user.twitter, @user.twitter
+    = link_to @user.twitter, @user.twitter if @user.twitter
   %li
     About me:
     = @user.about
   - unless @user.id == current_user.id
-    %li
-      Rate User:
-      = link_to 'Rate', new_user_rate_path(user)
+    - rating=@user.ratings.find_by("user_id", current_user.id)
+    - if rating.nil?
+      %li
+        Rate User:
+        = link_to 'Rate', new_user_rate_path(@user)
+    - else
+      %li
+        Edit user rating:
+        = link_to 'Edit', edit_user_rate_path(@user,rating)
 
 
 = link_to 'Edit', edit_user_path(@user)
