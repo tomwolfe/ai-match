@@ -1,5 +1,3 @@
-%p#notice= notice
-
 %p
   %b User:
   = @rate.user.name
@@ -11,5 +9,3 @@
   = @rate.value
 
 = link_to 'Edit', edit_user_rate_path(@user, @rate)
-\|
-= link_to 'Back', user_ratings_path(@user)

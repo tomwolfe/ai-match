@@ -89,7 +89,7 @@ class UsersController < ApplicationController
     
     def user_owner
       unless @user.id == current_user.id
-        flash[:notice] = 'Access denied as you are not owner of this User'
+        flash[:notice] = 'Access denied as you are not the owner of this User'
         redirect_to users_path
       end
     end

@@ -1,5 +1,8 @@
 class RatesController < ApplicationController
-  before_action :set_rate_user, only: [:show, :edit]
+  before_action :set_rate_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:new, :create, :update]
+  before_action :user_owner, only: [:edit, :update, :destroy]
+  before_action :view_rating, only: [:show]
 
   # GET /:user_id/rates/1
   # GET /:user_id/rates/1.json
@@ -8,7 +11,6 @@ class RatesController < ApplicationController
 
   # GET /:user_id/rates/new
   def new
-    @user=User.find(params[:user_id])
     @rate = Rate.new
   end
 
@@ -19,7 +21,6 @@ class RatesController < ApplicationController
   # POST /:user_id/rates
   # POST /:user_id/rates.json
   def create
-    @user=User.find(params[:user_id])
     @rate = @user.raters.new(rate_params)
     @rate.rater_id = current_user.id
 
@@ -36,8 +37,6 @@ class RatesController < ApplicationController
 
   # PATCH/PUT /:user_id/rates
   def update
-    @user= User.find(params[:user_id])
-    @rate = Rate.find(params[:id])
     respond_to do |format|
       if @rate.update(rate_params)
         format.html { redirect_to [@user, @rate], notice: 'Rate was successfully updated.' }
@@ -51,7 +50,6 @@ class RatesController < ApplicationController
 
   # DELETE /:user_id/rates
   def destroy
-    @rate = Rate.find(params[:id])
     @rate.destroy
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Rate was successfully destroyed.' }
@@ -65,7 +63,25 @@ class RatesController < ApplicationController
       @rate = Rate.find(params[:id])
       @user = User.find(params[:user_id])
     end
+    
+    def set_user
+      @user = User.find(params[:user_id])
+    end
 
+    def user_owner
+      unless @rate.rater_id == current_user.id
+        flash[:notice] = 'Access denied as you are not the owner of this Rate'
+        redirect_to :back
+      end
+    end
+    
+    def view_rating
+      unless @rate.rater_id == current_user.id || @rate.user_id == current_user.id
+        flash[:notice] = 'Access denied as you are neither the owner or receiver of this Rate'
+        redirect_to :back
+      end
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def rate_params
       params.require(:rate).permit(:user_id, :rater_id, :value)
