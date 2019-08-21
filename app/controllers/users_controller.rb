@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :user_owner, only: [:edit, :update, :destroy]
+  before_action :login_required, only: [:show]
+  
   
   # GET /users/:user_id/raters
   def raters
@@ -98,6 +100,13 @@ class UsersController < ApplicationController
       unless @user.id == current_user.id
         flash[:notice] = 'Access denied as you are not the owner of this User'
         redirect_to :back
+      end
+    end
+    
+    def login_required
+      unless current_user
+        flash[:notice] = 'Access denied. Login required.'
+        redirect_to root_path
       end
     end
 
