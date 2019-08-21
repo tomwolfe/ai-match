@@ -1,7 +1,7 @@
 -title "Users near you (that you have yet to rate)"
 
 = form_tag users_path, :method => :get do
-  = label_tag "within distance"
+  = label_tag "within distance (default: 100 miles)"
   = text_field_tag :distance, params[:distance]
   = submit_tag "Submit"
 
