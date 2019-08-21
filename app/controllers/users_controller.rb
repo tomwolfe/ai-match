@@ -46,6 +46,7 @@ class UsersController < ApplicationController
     else
       @users=User.near(current_user, 100)
     end
+    @users=@users.where.not(id: current_user.ratings.select(:user_id))
     #@users=User.handle_minors(@users, current_user)
   end
 

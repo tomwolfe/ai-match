@@ -1,4 +1,4 @@
--title "Users near you (Listing users you have yet to rate)"
+-title "Users near you (that you have yet to rate)"
 
 = form_tag users_path, :method => :get do
   = label_tag "within distance"
@@ -34,5 +34,6 @@
         %td= user.orientation
         %td= user.distance
         %td= link_to 'Rate', new_user_rate_path(user)
+        
 
 %br
