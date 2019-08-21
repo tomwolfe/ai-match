@@ -16,6 +16,8 @@
           = link_to "Sign out", signout_path
           %ul
             %li
+              =link_to "Mutual likes", user_mutual_path(current_user)
+            %li
               =link_to "Who likes you", user_raters_path(current_user)
             %li
               =link_to "Your ratings", user_ratings_path(current_user)

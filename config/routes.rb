@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users do
     get 'ratings'
     get 'raters'
+    get 'mutual'
     resources :rates
   end
   get "/auth/:provider/callback" => "sessions#create"

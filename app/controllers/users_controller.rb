@@ -1,17 +1,23 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :raters, :ratings]
-  before_action :user_owner, only: [:edit, :update, :destroy, :raters, :ratings]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :user_owner, only: [:edit, :update, :destroy]
   
   # GET /users/:user_id/raters
   def raters
-    @raters = @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:rater_id)).includes(:rater)
+    @raters = current_user.raters.where(value: true).where.not(user_id: current_user.ratings.select(:rater_id)).includes(:rater)
     #@raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
     #@raters=User.near(current_user).joins(:raters).preload(:raters).where("raters.value" => true).where.not(user_id: current_user.ratings.select(:user_id))
   end
   
   # GET /users/:user_id/ratings
   def ratings
-    @ratings = @user.ratings.includes(:user)
+    @ratings = current_user.ratings.includes(:user)
+    #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
+  end
+  
+   # GET /users/:user_id/mutual
+  def mutual
+    @ratings = current_user.ratings.where(value: true).joins("INNER JOIN Rates r2 ON Rates.user_id=r2.rater_id AND Rates.rater_id=r2.user_id").where(rater_id: current_user.id).includes(:user)
     #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
   end
   
@@ -90,7 +96,7 @@ class UsersController < ApplicationController
     def user_owner
       unless @user.id == current_user.id
         flash[:notice] = 'Access denied as you are not the owner of this User'
-        redirect_to users_path
+        redirect_to :back
       end
     end
 
