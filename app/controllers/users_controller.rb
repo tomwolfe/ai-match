@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   
   # GET /users/:user_id/raters
   def raters
-    @raters = current_user.raters.where(value: true).where.not(user_id: current_user.ratings.select(:rater_id)).includes(:rater)
+    @raters = current_user.raters.where(value: true).where.not(rater_id: current_user.ratings.select(:user_id)).includes(:rater)
     #@raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
     #@raters=User.near(current_user).joins(:raters).preload(:raters).where("raters.value" => true).where.not(user_id: current_user.ratings.select(:user_id))
   end
