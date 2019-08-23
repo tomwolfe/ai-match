@@ -9,7 +9,7 @@ class User < ApplicationRecord
   geocoded_by :location
   after_validation :geocode, if: ->(obj){ obj.location.present? and obj.location_changed? }
   
-  def self.build_with_omniauth(auth)
+  def self.create_with_omniauth(auth)
     User.create!(:provider => auth["provider"], :uid => auth["uid"], :name => auth["info"]["name"], :picture => auth["info"]["image"], :location => auth["info"]["location"], :twitter => auth["info"]["urls"]["Twitter"])
   end
   

@@ -1,6 +1,7 @@
 class RatesController < ApplicationController
   before_action :set_rate_user, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:new, :create, :update]
+  before_action :login_required, only: [:show, :new, :edit]
   before_action :user_owner, only: [:edit, :update, :destroy]
   before_action :view_rating, only: [:show]
 

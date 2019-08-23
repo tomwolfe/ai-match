@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :user_owner, only: [:edit, :update, :destroy]
-  before_action :login_required, only: [:show]
+  before_action :login_required, only: [:show, :index, :edit]
   
   
   # GET /users/:user_id/raters
@@ -23,9 +23,9 @@ class UsersController < ApplicationController
     #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
   end
   
-  def new
-    @user=User.build_with_omniauth(session[:omniauth])
-  end
+  #def new
+    #@user=User.create_with_omniauth(session[:omniauth])
+  #end
   
   # POST /users
   def create
@@ -100,13 +100,6 @@ class UsersController < ApplicationController
       unless @user.id == current_user.id
         flash[:notice] = 'Access denied as you are not the owner of this User'
         redirect_to :back
-      end
-    end
-    
-    def login_required
-      unless current_user
-        flash[:notice] = 'Access denied. Login required.'
-        redirect_to root_path
       end
     end
 
