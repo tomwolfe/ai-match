@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
   resources :rates
+  get 'ratings' => "users#ratings"
+  get 'raters'=> "users#raters"
+  get 'mutual'=> "users#mutual"
   resources :users do
-    get 'ratings'
-    get 'raters'
-    get 'mutual'
     resources :rates
   end
   get "/auth/:provider/callback" => "sessions#create"
