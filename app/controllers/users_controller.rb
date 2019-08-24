@@ -1,12 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :user_owner, only: [:edit, :update, :destroy]
-  before_action :login_required, only: [:show, :index, :edit]
+  before_action :login_required, only: [:show, :index, :edit, :raters, :ratings, :mutual]
+  before_action :set_age, only: [:raters, :ratings, :index, :mutual]
   
   
   # GET /users/:user_id/raters
   def raters
     @raters = current_user.raters.where(value: true).where.not(rater_id: current_user.ratings.select(:user_id)).includes(:rater)
+    @raters=User.handle_minors(@raters, current_user, true)
     #@raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
     #@raters=User.near(current_user).joins(:raters).preload(:raters).where("raters.value" => true).where.not(user_id: current_user.ratings.select(:user_id))
   end
@@ -14,12 +16,14 @@ class UsersController < ApplicationController
   # GET /users/:user_id/ratings
   def ratings
     @ratings = current_user.ratings.includes(:user)
+    @ratings =User.handle_minors(@ratings, current_user, true)
     #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
   end
   
    # GET /users/:user_id/mutual
   def mutual
     @ratings = current_user.ratings.where(value: true).joins("INNER JOIN Rates r2 ON Rates.user_id=r2.rater_id AND Rates.rater_id=r2.user_id").where(rater_id: current_user.id).includes(:user)
+    @ratings=User.handle_minors(@ratings, current_user, true)
     #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
   end
   
@@ -49,7 +53,7 @@ class UsersController < ApplicationController
       @users=User.near(current_user, 100)
     end
     @users=@users.where.not(id: current_user.ratings.select(:user_id))
-    #@users=User.handle_minors(@users, current_user)
+    @users=User.handle_minors(@users, current_user)
   end
 
   # GET /users/1
@@ -100,6 +104,12 @@ class UsersController < ApplicationController
       unless @user.id == current_user.id
         flash[:notice] = 'Access denied as you are not the owner of this User'
         redirect_to :back
+      end
+    end
+    
+    def set_age
+      if current_user.age.nil? 
+        redirect_to edit_user_path(current_user), :notice => "Set your age to continue."
       end
     end
 
