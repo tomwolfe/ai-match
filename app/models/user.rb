@@ -5,6 +5,7 @@ class User < ApplicationRecord
   scope :minor, -> { where("age < ?", 18) }
   scope :adult, -> { where("age >= ?", 18) }
   
+  validates :age, numericality: { greater_than_or_equal_to: 13 }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   geocoded_by :location
   after_validation :geocode, if: ->(obj){ obj.location.present? and obj.location_changed? }
