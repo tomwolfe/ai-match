@@ -26,9 +26,6 @@
     Distance:
     =@user.distance_to(current_user)
   %li
-    Twitter:
-    = link_to @user.twitter, @user.twitter if @user.twitter
-  %li
     About me:
     = @user.about
   - unless @user.id == current_user.id
