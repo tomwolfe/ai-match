@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
   resources :rates
-  get 'ratings' => "users#ratings"
-  get 'raters'=> "users#raters"
-  get 'mutual'=> "users#mutual"
+  get 'ratings' => "rates#ratings"
+  get 'raters'=> "rates#raters"
+  get 'mutual'=> "rates#mutual"
   resources :users do
     resources :rates
   end

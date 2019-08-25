@@ -1,4 +1,4 @@
--title "Listing users who like you that you've yet to rate"
+-title "Listing users you have rated"
 
 %table
   %thead
@@ -13,11 +13,15 @@
       %th Weight
       %th Orientation
       %th Distance
-      %th Rate
+      %th Rating
+      %th Show
+      %th Edit
+      %th Delete
 
   %tbody
-    - @raters.each do |rater|
-      - @user = rater.rater
+    - @ratings.each do |rating|
+      - @rate=rating
+      - @user = @rate.user
       %tr
         %td= image_tag(@user.picture) if @user.picture
         %td= link_to @user.name, @user
@@ -29,8 +33,10 @@
         %td= "#{@user.weight} Lbs"
         %td= @user.orientation
         %td= @user.distance_to(current_user)
-        - @rate = @user.raters.new
+        %td= @rate.value
+        %td= link_to 'Show', @rate
         %td
-          =render
+          =render 'form'
+        %td= link_to 'Destroy', @rate, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br

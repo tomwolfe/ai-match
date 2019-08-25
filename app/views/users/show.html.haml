@@ -40,7 +40,7 @@
     - else
       %li
         Edit user rating:
-        = link_to 'Edit', edit_user_rate_path(@user,rating)
+        = link_to 'Edit', edit_rate_path(rating)
 
 
 - if @user.id == current_user.id

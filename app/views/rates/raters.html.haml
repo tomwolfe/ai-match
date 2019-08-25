@@ -31,6 +31,6 @@
         %td= @user.distance_to(current_user)
         - @rate = @user.raters.new
         %td
-          =render
+          =render 'form'
 
 %br

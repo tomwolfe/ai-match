@@ -1,12 +1,35 @@
 class RatesController < ApplicationController
-  before_action :set_rate_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_rate, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:new, :create, :update]
-  before_action :login_required, only: [:show, :new, :edit]
+  before_action :login_required, only: [:show, :new, :edit, :raters, :ratings, :mutual]
   before_action :user_owner, only: [:edit, :update, :destroy]
   before_action :view_rating, only: [:show]
+  
+  
+  # GET /raters
+  def raters
+    @raters = current_user.raters.where(value: true).where.not(rater_id: current_user.ratings.select(:user_id)).includes(:rater)
+    @raters=User.handle_minors(@raters, current_user, true)
+    #@raters = User.where(id: @user.raters.where(value: true).where.not(user_id: @user.ratings.select(:user_id)).select(:rater_id) ).near(current_user)
+    #@raters=User.near(current_user).joins(:raters).preload(:raters).where("raters.value" => true).where.not(user_id: current_user.ratings.select(:user_id))
+  end
+  
+  # GET /ratings
+  def ratings
+    @ratings = current_user.ratings.includes(:user)
+    @ratings =User.handle_minors(@ratings, current_user, true)
+    #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
+  end
+  
+   # GET /mutual
+  def mutual
+    @ratings = current_user.ratings.where(value: true).joins("INNER JOIN Rates r2 ON Rates.user_id=r2.rater_id AND Rates.rater_id=r2.user_id").where(rater_id: current_user.id).includes(:user)
+    @ratings=User.handle_minors(@ratings, current_user, true)
+    #@ratings = User.near(current_user).joins(:ratings).preload(:ratings)
+  end
 
-  # GET /:user_id/rates/1
-  # GET /:user_id/rates/1.json
+  # GET /rates/1
+  # GET /rates/1.json
   def show
   end
 
@@ -15,7 +38,7 @@ class RatesController < ApplicationController
     @rate = Rate.new
   end
 
-  # GET /:user_id/rates/1/edit
+  # GET /rates/1/edit
   def edit
   end
 
@@ -27,7 +50,7 @@ class RatesController < ApplicationController
 
     respond_to do |format|
       if @rate.save
-        format.html { redirect_to [@user, @rate], notice: 'Rate was successfully created.' }
+        format.html { redirect_to @rate, notice: 'Rate was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else
         format.html { render :new }
@@ -36,11 +59,11 @@ class RatesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /:user_id/rates
+  # PATCH/PUT /rates
   def update
     respond_to do |format|
       if @rate.update(rate_params)
-        format.html { redirect_to [@user, @rate], notice: 'Rate was successfully updated.' }
+        format.html { redirect_to @rate, notice: 'Rate was successfully updated.' }
         format.json { render :show, status: :ok, location: @rate }
       else
         format.html { render :edit }
@@ -49,7 +72,7 @@ class RatesController < ApplicationController
     end
   end
 
-  # DELETE /:user_id/rates
+  # DELETE /rates
   def destroy
     @rate.destroy
     respond_to do |format|
@@ -60,9 +83,8 @@ class RatesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_rate_user
+    def set_rate
       @rate = Rate.find(params[:id])
-      @user = User.find(params[:user_id])
     end
     
     def set_user
