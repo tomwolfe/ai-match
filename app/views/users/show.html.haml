@@ -29,15 +29,16 @@
     About me:
     = @user.about
   - unless @user.id == current_user.id
-    - rating=@user.raters.find_by(rater_id: current_user.id)
-    - if rating.nil?
+    - @rate=@user.raters.find_by(rater_id: current_user.id)
+    - if @rate.nil?
+      - @rate = @user.raters.new
       %li
         Rate User:
-        = link_to 'Rate', new_user_rate_path(@user)
+        = render "rates/form"
     - else
       %li
         Edit user rating:
-        = link_to 'Edit', edit_rate_path(rating)
+        = render "rates/form"
 
 
 - if @user.id == current_user.id
