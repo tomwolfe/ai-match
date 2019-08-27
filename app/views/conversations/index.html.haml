@@ -1,8 +1,8 @@
 -title "Inbox"
 %ul
   - @conversations.each do |conversation|
-    %li= link_to conversation.recipient(current_user).username, conversation_messages_path(conversation)
+    %li= link_to conversation.recipient(current_user).name, conversation_messages_path(conversation)
     - if !conversation.unread_message_count(current_user).zero?
-        (
-        =conversation.unread_message_count(current_user)
-        )
+      (
+      =conversation.unread_message_count(current_user)
+      )
