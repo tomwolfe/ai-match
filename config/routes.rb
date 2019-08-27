@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
+  get 'conversations/index'
+
   root 'welcome#index'
   get 'welcome/index'
   resources :rates
   get 'ratings' => "rates#ratings"
   get 'raters'=> "rates#raters"
   get 'mutual'=> "rates#mutual"
+  resources :conversations, only: [:index, :create] do
+    resources :messages, only: [:index, :create]
+  end
   resources :users do
     resources :rates
   end

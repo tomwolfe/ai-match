@@ -1,0 +1,5 @@
+-title "Inbox"
+%ul
+  - @conversations.each do |conversation|
+    - recipient = conversation.sender_id == current_user.id ? conversation.receiver : conversation.sender 
+    %li= link_to recipient.username, conversation_messages_path(conversation)
