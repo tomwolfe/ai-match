@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if (current_user.age >= 18 && @user.age >=18) || (current_user.age < 18 && @user.age <18)
+    if (current_user.id == @user.id) || (current_user.age >= 18 && @user.age >=18) || (current_user.age < 18 && @user.age <18)
       render :show
     else
       redirect_to :root, notice: "One of you is over 18 and one is under. Cannot show user."
