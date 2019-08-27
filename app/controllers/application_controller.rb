@@ -14,4 +14,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+  
+  def set_age
+    if current_user.age.nil? 
+      redirect_to edit_user_path(current_user), :notice => "Set your age to continue."
+    end
+  end
 end

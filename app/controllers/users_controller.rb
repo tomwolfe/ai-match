@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :user_owner, only: [:edit, :update, :destroy]
   before_action :login_required, only: [:show, :index, :edit]
-  before_action :set_age, only: [:raters, :ratings, :index, :mutual]
+  before_action :set_age, only: [:index]
   
   #def new
     #@user=User.create_with_omniauth(session[:omniauth])
@@ -86,12 +86,6 @@ class UsersController < ApplicationController
       unless @user.id == current_user.id
         flash[:notice] = 'Access denied as you are not the owner of this User'
         redirect_to :back
-      end
-    end
-    
-    def set_age
-      if current_user.age.nil? 
-        redirect_to edit_user_path(current_user), :notice => "Set your age to continue."
       end
     end
 

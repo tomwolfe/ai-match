@@ -4,6 +4,7 @@ class RatesController < ApplicationController
   before_action :login_required, only: [:show, :new, :edit, :raters, :ratings, :mutual]
   before_action :user_owner, only: [:edit, :update, :destroy]
   before_action :view_rating, only: [:show]
+  before_action :set_age, only: [:raters, :ratings, :mutual]
   
   
   # GET /raters
