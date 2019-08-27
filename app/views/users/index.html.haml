@@ -19,6 +19,7 @@
       %th Orientation
       %th Distance
       %th Rate
+      %th Message
 
   %tbody
     - @users.each do |user|
@@ -37,5 +38,6 @@
         - @rate = @user.raters.new
         %td
           =render "rates/form"
+        %td= link_to 'Message', conversations_path(sender_id: current_user.id, receiver_id: @user.id), method: :post
 
 %br

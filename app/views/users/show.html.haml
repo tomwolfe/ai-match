@@ -39,6 +39,9 @@
       %li
         Edit user rating:
         = render "rates/form"
+  %li
+    Message:
+    = link_to 'Message', conversations_path(sender_id: current_user.id, receiver_id: @user.id), method: :post
 
 
 - if @user.id == current_user.id
