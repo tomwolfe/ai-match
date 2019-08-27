@@ -23,6 +23,8 @@
               =link_to "Your ratings", ratings_path
             %li
               =link_to "Users near you", users_path
+            %li
+              =link_to "Inbox", conversations_path
         - else
           = link_to "Sign in with Twitter", "/auth/twitter"
       %div#flash

@@ -1,0 +1,13 @@
+-title "Message"
+%ul
+  - @messages.each do |message|
+    - if message.body
+      %li
+        %h4= message.user.username
+        %p=message.body
+
+= form_for [@conversation, @message] do |f|
+  %div.field
+    = f.text_area :body, placeholder: "Your message"
+
+  = f.submit "Send"

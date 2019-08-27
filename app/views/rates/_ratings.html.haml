@@ -15,6 +15,7 @@
       %th Show
       %th Edit
       %th Delete
+      %th Message
 
   %tbody
     - @ratings.each do |rating|
@@ -36,5 +37,6 @@
         %td
           =render 'form'
         %td= link_to 'Destroy', @rate, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Message', conversations_path(sender_id: current_user.id, receiver_id: @user.id), method: :post
 
 %br
