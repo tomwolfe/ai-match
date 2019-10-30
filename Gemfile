@@ -26,6 +26,7 @@ gem 'haml-rails'
 gem 'sassc-rails'
 gem 'omniauth-twitter'
 gem 'geocoder'
+gem 'carrierwave'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
