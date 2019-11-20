@@ -28,6 +28,8 @@ gem 'omniauth-twitter'
 gem 'geocoder'
 gem 'carrierwave'
 gem 'pg'
+gem 'puma'
+gem 'redis'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -35,8 +37,6 @@ gem 'pg'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  # Use sqlite3 as the database for Active Record
-  # gem 'sqlite3', '~> 1.4.1'
 end
 
 group :development do
@@ -47,10 +47,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
-
-#group :production do
-#  gem 'pg'
-#end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
