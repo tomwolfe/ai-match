@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_111629) do
+ActiveRecord::Schema.define(version: 2019_11_21_234424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(version: 2019_11_05_111629) do
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["read"], name: "index_messages_on_read"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "predictions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "predictor_id", null: false
+    t.float "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["predictor_id"], name: "index_predictions_on_predictor_id"
+    t.index ["user_id", "predictor_id"], name: "index_predictions_on_user_id_and_predictor_id", unique: true
+    t.index ["user_id"], name: "index_predictions_on_user_id"
+    t.index ["value"], name: "index_predictions_on_value"
   end
 
   create_table "rates", id: :serial, force: :cascade do |t|
