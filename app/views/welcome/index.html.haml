@@ -1,10 +1,16 @@
 - title "AI Match: Welcome"
 %h2 Less swiping, more matching.
 %p
-  Finds users that are most likely to match with one another using a recommender system trained on dislikes and mutual likes.
+  Recommender system trained on dislikes and matches. Similar model to Netflix, but for dating.
   
 %p
-  Pre-Alpha status, very unfinished, but finding users near you, rating users, viewing mutual likes, viewing who liked you, and messaging users is possible. Users over 18 can only see and rate users over 18, between 13-17 can only see and rate those of the same age group. Our matching algorithm is coming soon.
+  Find people you're likely to match with near you.
+  
+%p
+  Over 18 can only see and rate people over 18, between 13-17 can only see and rate those of the same age group.
+
+%p
+  Alpha status. Likely many bugs.
   
 %p
   =link_to "Contact me", "https://twitter.com/blackphiber"
@@ -13,6 +19,19 @@
 %p
   %h2 Updates:
   %li
+    Feb 18, 2020 Matching algorithm implemented. There's probably still some bugs.
+  %li
     Nov 17, 2019 Upgraded to Rails 6
   %li
     Oct 30, 2019 Login issues fixed. Forced https
+    
+%p
+  %h2 Features/etc under development:
+  %li
+    Photo gallaries
+  %li
+    "Last seen"
+  %li
+    Regularization is currently set to 1 and features are set to 10 which likely isn't optimal. Once we have enough data I'll try different values for regularization on different cross-validation data-sets to optimize cost while preventing over/underfitting.
+  %li
+    list current cost for predictions

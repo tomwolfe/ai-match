@@ -2,6 +2,9 @@ class User < ApplicationRecord
   has_many :raters, :class_name => 'Rate', :foreign_key => 'user_id', dependent: :destroy
   has_many :ratings, :class_name => 'Rate', :foreign_key => 'rater_id', dependent: :destroy
   
+  has_many :predictors, :class_name => 'Prediction', :foreign_key => 'user_id', dependent: :destroy
+  has_many :predictings, :class_name => 'Prediction', :foreign_key => 'predictor_id', dependent: :destroy
+  
   has_many :senders, :class_name => 'Conversation', :foreign_key => 'sender_id', dependent: :destroy
   has_many :receivers, :class_name => 'Conversation', :foreign_key => 'receiver_id', dependent: :destroy
   

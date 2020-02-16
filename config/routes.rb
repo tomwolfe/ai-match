@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :predictions
   get 'messages/index'
 
   get 'conversations/index'

@@ -10,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_21_234424) do
+ActiveRecord::Schema.define(version: 2020_02_16_103609) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "conversations", id: :serial, force: :cascade do |t|
+  create_table "conversations", force: :cascade do |t|
     t.integer "sender_id"
     t.integer "receiver_id"
     t.datetime "created_at", null: false
@@ -25,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_11_21_234424) do
     t.index ["sender_id"], name: "index_conversations_on_sender_id"
   end
 
-  create_table "messages", id: :serial, force: :cascade do |t|
+  create_table "messages", force: :cascade do |t|
     t.text "body"
     t.integer "conversation_id"
     t.integer "user_id"
@@ -49,7 +46,7 @@ ActiveRecord::Schema.define(version: 2019_11_21_234424) do
     t.index ["value"], name: "index_predictions_on_value"
   end
 
-  create_table "rates", id: :serial, force: :cascade do |t|
+  create_table "rates", force: :cascade do |t|
     t.integer "user_id"
     t.integer "rater_id"
     t.boolean "value"
@@ -61,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_11_21_234424) do
     t.index ["value"], name: "index_rates_on_value"
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
     t.string "name"
