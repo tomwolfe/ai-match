@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :predictions
+  resources :predictions, only: [:index]
   get 'messages/index'
 
   get 'conversations/index'

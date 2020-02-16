@@ -1,19 +1,40 @@
-%h1 Listing predictions
+-title "Predictions of who you're likely to match with"
 
 %table
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Picture
+      %th Name
+      %th Sex
+      %th Location
+      %th About
+      %th Age
+      %th Height
+      %th Weight
+      %th Orientation
+      %th Distance
+      %th Prediction
+      %th Rate
+      %th Message
 
   %tbody
     - @predictions.each do |prediction|
+      - @user = prediction.predictor
       %tr
-        %td= link_to 'Show', prediction
-        %td= link_to 'Edit', edit_prediction_path(prediction)
-        %td= link_to 'Destroy', prediction, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= image_tag(@user.picture) if @user.picture
+        %td= link_to @user.name, @user
+        %td= @user.sex
+        %td= @user.location
+        %td= truncate(@user.about)
+        %td= @user.age
+        %td= "#{@user.height} In"
+        %td= "#{@user.weight} Lbs"
+        %td= @user.orientation
+        %td= @user.distance_to(current_user)
+        %td= prediction.value
+        - @rate = @user.raters.new
+        %td
+          =render 'rates/form'
+        %td= link_to 'Message', conversations_path(sender_id: current_user.id, receiver_id: @user.id), method: :post
 
 %br
-
-= link_to 'New Prediction', new_prediction_path

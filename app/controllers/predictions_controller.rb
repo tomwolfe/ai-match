@@ -1,10 +1,13 @@
 class PredictionsController < ApplicationController
   before_action :set_prediction, only: [:show, :edit, :update, :destroy]
+  before_action :login_required, only: [:index]
+  before_action :set_age, only: [:index]
+  before_action :login_required, only: [:index]
 
   # GET /predictions
   # GET /predictions.json
   def index
-    @predictions = current_user.predictors.includes(:predictor)
+    @predictions = current_user.predictors.where.not(predictor_id: current_user.ratings.select(:user_id)).order(value: :desc).includes(:predictor)
     @predictions=User.handle_minors(@predictions, current_user, true)
   end
 
