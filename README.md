@@ -14,7 +14,7 @@ OmniAuth login for development can be achieved by creating a file /config/app_en
 ENV['TWITTER_KEY']='key'
 ENV['TWITTER_SECRET']='secret'
 for production you can just set the ENV variables on Heroku or whatever.
-heroku buildpacks:set https://github.com/gregory/heroku-gsl-buildpack.git#gsl-1.16
+heroku buildpacks:add https://github.com/nolman/heroku-gsl-buildpack.git --index=1
 https://github.com/mperham/sidekiq/wiki/Deployment#heroku:
 heroku config:set MALLOC_ARENA_MAX=2
 heroku addons:create redistogo
