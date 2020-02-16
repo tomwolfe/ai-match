@@ -85,6 +85,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
+    connection_pool (2.2.2)
     crass (1.0.6)
     erubi (1.9.0)
     erubis (2.7.0)
@@ -155,6 +156,8 @@ GEM
     puma (4.3.1)
       nio4r (~> 2.0)
     rack (2.2.2)
+    rack-protection (2.0.8.1)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.2.1)
@@ -201,6 +204,11 @@ GEM
       sprockets-rails
       tilt
     sexp_processor (4.14.1)
+    sidekiq (6.0.5)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      rack-protection (>= 2.0.0)
+      redis (>= 4.1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -254,6 +262,7 @@ DEPENDENCIES
   rails
   redis
   sassc-rails
+  sidekiq
   spring
   spring-watcher-listen
   sqlite3
