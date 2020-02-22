@@ -2,7 +2,6 @@ class PredictionsController < ApplicationController
   before_action :set_prediction, only: [:show, :edit, :update, :destroy]
   before_action :login_required, only: [:index]
   before_action :set_age, only: [:index]
-  before_action :login_required, only: [:index]
 
   # GET /predictions
   # GET /predictions.json
