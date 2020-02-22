@@ -6,7 +6,13 @@ class PredictionsController < ApplicationController
   # GET /predictions
   # GET /predictions.json
   def index
-    @predictions = current_user.predictors.where.not(predictor_id: current_user.ratings.select(:user_id)).order(value: :desc).includes(:predictor)
+    if params[:distance].present?
+      users=User.near(current_user, params[:distance], order: false)
+    else
+      users=User.near(current_user, 100, order: false)
+    end
+    users=users.pluck(:id)
+    @predictions = current_user.predictors.where.not(predictor_id: current_user.ratings.select(:user_id)).where(predictor_id: users).order(value: :desc).includes(:predictor)
     @predictions=User.handle_minors(@predictions, current_user, true)
   end
 

@@ -1,7 +1,12 @@
 -title "Predictions of who you're likely to match with"
 
 %p
-  Updated nightly. Check back to see who our algorithm predicts will be a good match for you based on who you've already matched with and disliked. Only showing users you've yet to rate. Sorted by highest predictions of a match. It should ideally learn who you will match with, so you shouldn't have to filter by distance/gender/orientation/etc.
+  Updated nightly. Check back to see who our algorithm predicts will be a good match for you based on who you've already matched with and disliked. Only showing users you've yet to rate. Sorted by highest predictions of a match. It should ideally learn who you will match with, so you shouldn't have to filter by gender/orientation/etc. It will improve with more data but will never be perfect. More filtering options may be added depending on necessity.
+
+= form_tag predictions_path, :method => :get do
+  = label_tag "within distance (default: 100 miles)"
+  = text_field_tag :distance, params[:distance]
+  = submit_tag "Submit"
 
 %table
   %thead
